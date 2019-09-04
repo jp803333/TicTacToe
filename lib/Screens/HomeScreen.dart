@@ -10,6 +10,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('TicTacToe'),
         centerTitle: true,
@@ -18,12 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.cancel),
             onPressed: () {
               FirebaseAuth.instance.signOut();
+              Navigator.pushReplacementNamed(context, '/');
             },
           )
         ],
       ),
       body: Center(
-        child: Text("hello"),
+        child: Text('hello'),
       ),
     );
   }

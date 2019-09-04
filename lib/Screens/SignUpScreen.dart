@@ -1,21 +1,17 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
-  @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
-
+  TextEditingController _username = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +19,16 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              width: 200,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'UserName',
+                ),
+                keyboardType: TextInputType.text,
+                controller: _username,
+              ),
+            ),
             Container(
               width: 200,
               child: TextField(
@@ -36,37 +42,30 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: 200,
               child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'password'
-                ),
+                decoration: InputDecoration(hintText: 'password'),
                 obscureText: true,
                 controller: _password,
               ),
             ),
             FlatButton(
-              child: Text('login'),
+              child: Text('SignUp'),
               splashColor: Theme.of(context).accentColor,
               onPressed: () async {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                FirebaseUser user = await auth
-                    .signInWithEmailAndPassword(
+                var auth;
+                FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
                         email: _email.text, password: _password.text)
-                    .then((auth) {
-                  return auth.user;
+                    .then((result) {
+                  auth = result;
+                  print(result.user.uid);
+                  Firestore.instance.document('Users/'+result.user.uid).updateData({
+                    'name': _username.text,
+                  });
                 }).catchError((e) {
                   print(e);
                 });
-                if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/homescreen');
-                }
               },
             ),
-            InkWell(
-              child: Text("SignUp"),
-              onTap: (){
-                Navigator.pushNamed(context, '/signupscreen');
-              },
-            )
           ],
         ),
       ),

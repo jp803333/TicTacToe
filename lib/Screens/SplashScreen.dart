@@ -7,14 +7,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String _uid;
   @override
   void initState() {
     super.initState();
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       if (user != null) {
-        Navigator.popAndPushNamed(context, '/homescreen');
+        Navigator.pushReplacementNamed(context, '/homescreen');
       } else {
-        Navigator.popAndPushNamed(context, '/loginscreen');
+        Navigator.pushReplacementNamed(context, '/loginscreen');
       }
     });
   }
@@ -23,7 +24,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('loading'),
+        child: Icon(
+          Icons.laptop_windows,
+          size: 100,
+        ),
       ),
     );
   }

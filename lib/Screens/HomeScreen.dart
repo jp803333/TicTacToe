@@ -21,11 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
               FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, '/');
             },
-          )
+          ),
         ],
       ),
       body: Center(
-        child: Text('hello'),
+        child: RaisedButton(
+          child: Text('Start'),
+          onPressed: (){
+            Navigator.pushNamed(context, '/loadingscreen');
+          },
+        ),
       ),
     );
   }

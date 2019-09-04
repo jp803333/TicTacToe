@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tictactoe/Screens/HomeScreen.dart';
+import 'package:tictactoe/Screens/LoadingScreen.dart';
 import 'package:tictactoe/Screens/LoginScreen.dart';
 import 'package:tictactoe/Screens/SignUpScreen.dart';
 import 'package:tictactoe/Screens/SplashScreen.dart';
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
         '/homescreen': (context) => HomeScreen(),
         '/loginscreen': (context) => LoginScreen(),
         '/signupscreen': (context) => SignUpScreen(),
+        '/loadingscreen': (context) => LoadingScreen(),
         // '/gamescreen':(context)=>GameScreen(),
       },
     );

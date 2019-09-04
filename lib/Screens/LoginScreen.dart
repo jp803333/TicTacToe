@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -47,6 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text('login'),
               splashColor: Theme.of(context).accentColor,
               onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
                 FirebaseAuth auth = FirebaseAuth.instance;
                 FirebaseUser user = await auth
                     .signInWithEmailAndPassword(
@@ -57,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   print(e);
                 });
                 if (user != null) {
+                  Navigator.pop(context);
                   Navigator.pushReplacementNamed(context, '/homescreen');
                 }
               },

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +50,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Text('SignUp'),
               splashColor: Theme.of(context).accentColor,
               onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
                 var auth;
                 FirebaseAuth.instance
                     .createUserWithEmailAndPassword(
@@ -58,10 +65,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     .then((result) {
                   auth = result;
                   print(result.user.uid);
-                  Firestore.instance.document('Users/'+result.user.uid).updateData({
+                  Firestore.instance
+                      .document('Users/' + result.user.uid)
+                      .updateData({
                     'name': _username.text,
+                  }).then((_) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   });
                 }).catchError((e) {
+                  Navigator.pop(context);
                   print(e);
                 });
               },

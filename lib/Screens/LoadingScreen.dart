@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -8,24 +9,26 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
-    
+    matcher();
     super.initState();
+  }
+
+  matcher() async {
+    await Future.delayed(Duration(seconds: 1));
+    Navigator.pushReplacementNamed(context, '/gamescreen');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: Key('scf'),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              CircularProgressIndicator(
-
-              ),
+              CircularProgressIndicator(),
               RaisedButton(
                 child: Text("Cancel"),
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
               )

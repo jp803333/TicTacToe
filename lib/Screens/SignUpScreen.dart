@@ -58,12 +58,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     );
                   },
                 );
-                var auth;
                 FirebaseAuth.instance
                     .createUserWithEmailAndPassword(
                         email: _email.text, password: _password.text)
                     .then((result) {
-                  auth = result;
                   print(result.user.uid);
                   Firestore.instance
                       .document('Users/' + result.user.uid)
